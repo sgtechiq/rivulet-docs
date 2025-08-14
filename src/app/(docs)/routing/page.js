@@ -6,75 +6,194 @@ export default function Routing() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
-        Routing
+        Routing System
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Rivulet's routing system provides a clean, intuitive way to define web routes with support for RESTful patterns, middleware, and route caching.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Database Configuration
+        Route Configuration
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        The <code>config/routes.php</code> configuration file defines how URI prefixes map to route definition files in your Rivulet application.
+      </Typography>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Configuration Overview
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        The configuration file (<code>config/routes.php</code>) serves as the central registry for:
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4, mb: 3 }}>
+        <li><Typography variant="body1">URI prefix to route file mappings</Typography></li>
+        <li><Typography variant="body1">Route loading order</Typography></li>
+        <li><Typography variant="body1">Application entry points</Typography></li>
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Basic Structure
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        The configuration returns an array with a <code>handlers</code> key that maps URI prefixes to route files:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Configure your database in .env file\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=rivulet\nDB_USERNAME=root\nDB_PASSWORD="
-        phpCode="<?php\n// Database configuration\nreturn [\n    'default' => env('DB_CONNECTION', 'mysql'),\n    'connections' => [\n        'mysql' => [\n            'driver' => 'mysql',\n            'host' => env('DB_HOST', '127.0.0.1'),\n            'port' => env('DB_PORT', '3306'),\n            'database' => env('DB_DATABASE', 'rivulet'),\n            'username' => env('DB_USERNAME', 'root'),\n            'password' => env('DB_PASSWORD', ''),\n        ],\n    ],\n];"
+        phpCode={`<?php\n\nreturn [\n    'handlers' => [\n        // Default route handler (for root path '/')\n        ''    => 'web.php',\n        \n        // API route handler (for paths beginning with '/api')\n        'api' => 'api.php',\n        \n        // Admin panel routes\n        'admin' => 'admin.php'\n    ],\n];`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        ORM (Object-Relational Mapping)
+        Key Concepts
+      </Typography>
+      
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h5" component="h3" gutterBottom>
+          URI Prefix Matching
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Routes are matched in the order they are defined. The empty string prefix (<code>''</code>) handles the root path.
+        </Typography>
+        
+        <Typography variant="h5" component="h3" gutterBottom>
+          Route File Loading
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Each route file should be placed in the <code>routes/</code> directory and will be automatically loaded when its prefix matches.
+        </Typography>
+      </Box>
+
+      <Typography variant="h4" component="h2" gutterBottom>
+        Core Commands
+      </Typography>
+      
+      <Box sx={{ mb: 3, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+        <Typography variant="h6" component="h3" gutterBottom>
+          Routing System Commands
+        </Typography>
+        <CodeBlock 
+          bashCode="# List all registered routes\nphp luna routes:list\n\n# Cache routes for better performance\nphp luna routes:cache\n\n# Clear route cache\nphp luna routes:clear"
+        />
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Routing System Overview
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        The routing system consists of three main components:
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4, mb: 3 }}>
+        <li><Typography variant="body1"><strong>Route Definitions</strong> - Declared in route files under <code>/routes</code> directory</Typography></li>
+        <li><Typography variant="body1"><strong>Router</strong> - Matches incoming requests to registered routes</Typography></li>
+        <li><Typography variant="body1"><strong>Route Caching</strong> - Improves performance by caching compiled routes</Typography></li>
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Basic Routing
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Define routes in your route files (e.g. <code>routes/api.php</code>):
       </Typography>
       
       <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
+        phpCode={`<?php\n\n// Basic GET route with closure\nroute('GET', '/welcome', function () {\n    return ['message' => 'Welcome to our API'];\n});\n\n// Route to controller method\nroute('POST', '/users', UserController::class, 'store');`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations
+        Route Parameters
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Capture URI segments as parameters:
       </Typography>
       
       <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\n// Create\n$user = new User();\n$user->name = 'John Doe';\n$user->email = 'john@example.com';\n$user->password = bcrypt('password');\n$user->save();\n\n// Read\n$users = User::all();\n$user = User::find(1);\n\n// Update\n$user = User::find(1);\n$user->name = 'Jane Doe';\n$user->save();\n\n// Delete\n$user = User::find(1);\n$user->delete();"
+        phpCode={`// Required parameter\nroute('GET', '/users/{id}', UserController::class, 'show');\n\n// Optional parameter (needs custom handling)\nroute('GET', '/posts/{id?}', PostController::class, 'show');`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Relationships
+        Route Groups
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Group routes with common attributes:
       </Typography>
       
-  <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
-        htmlCode="<!-- Database commands example -->\n<div class='database-commands'>\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>"
+      <CodeBlock 
+        phpCode={`// Prefix group\nprefix('admin', function () {\n    route('GET', '/dashboard', AdminController::class, 'dashboard');\n    route('GET', '/users', AdminController::class, 'users');\n});\n\n// Middleware group\nmiddleware('auth', function () {\n    route('GET', '/profile', UserController::class, 'profile');\n    route('PUT', '/settings', UserController::class, 'updateSettings');\n});\n\n// Combined group\ngroup('prefix=api, middleware=auth:api', function () {\n    route('GET', '/data', DataController::class, 'index');\n});`}
       />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        CRUD Resource Routes
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Quickly generate CRUD routes for a resource:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`// Manual CRUD routes\nroute('GET', '/articles', ArticleController::class, 'index');\nroute('POST', '/articles', ArticleController::class, 'store');\nroute('GET', '/articles/{id}', ArticleController::class, 'show');\nroute('PUT', '/articles/{id}', ArticleController::class, 'update');\nroute('DELETE', '/articles/{id}', ArticleController::class, 'destroy');\n\n// Using endpoint helper\nendpoint('articles', ArticleController::class);`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Route Caching
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Cache routes for better performance in production:
+      </Typography>
+      
+      <CodeBlock 
+        bashCode="# Cache routes\nphp luna routes:cache\n\n# Clear route cache\nphp luna routes:clear\n\n# List routes (shows cached routes if available)\nphp luna routes:list"
+      />
+      
+      <Typography variant="body1" paragraph>
+        Route caching is automatically triggered when running <code>routes:cache</code> or when routes are loaded in production mode.
+      </Typography>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        File Serving
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Serve files directly through routes:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`// Serve single file\nroute('GET', '/download/terms', function () {\n    return Response::file('docs/terms.pdf');\n});\n\n// Dynamic file serving\nroute('GET', '/download/{file}', function (Request \$request, \$file) {\n    return Response::file("docs/\$file");\n});`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Complete Example
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        A complete API route file example:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`<?php\n\nuse App\\Controllers\\ArticleController;\nuse App\\Controllers\\UserController;\n\n// Public routes\nroute('GET', '/', function () {\n    return ['status' => 'API is running'];\n});\n\n// User routes\nprefix('users', function () {\n    route('POST', '/', UserController::class, 'store');\n    route('GET', '/verify/{token}', UserController::class, 'verify');\n    \n    // Authenticated routes\n    middleware('auth', function () {\n        route('GET', '/profile', UserController::class, 'profile');\n        route('PUT', '/profile', UserController::class, 'update');\n    });\n});\n\n// Article resource\nendpoint('articles', ArticleController::class);`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Best Practices
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Group related routes together using prefixes</Typography></li>
+        <li><Typography variant="body1">Apply middleware at the group level when possible</Typography></li>
+        <li><Typography variant="body1">Use RESTful conventions for resource routes</Typography></li>
+        <li><Typography variant="body1">Cache routes in production environment</Typography></li>
+        <li><Typography variant="body1">Document complex route parameters</Typography></li>
+        <li><Typography variant="body1">Keep route files organized by domain/feature</Typography></li>
+      </Box>
     </Box>
   );
 }

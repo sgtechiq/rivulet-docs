@@ -16,7 +16,7 @@ export default function Home() {
           <Button variant="contained" color="primary" component={Link} href="/installation" sx={{ mr: 2 }}>
             Get Started
           </Button>
-          <Button variant="outlined" color="primary" href="https://github.com/rivulet/framework" target="_blank">
+          <Button variant="outlined" color="primary" href="https://github.com/sgtechiq/rivulet" target="_blank">
             View on GitHub
           </Button>
         </Box>
@@ -82,71 +82,24 @@ export default function Home() {
           {[
             { title: 'Installation', href: '/installation', description: 'Learn how to install and set up Rivulet' },
             { title: 'Database Connection', href: '/database', description: 'Connect to databases and perform operations' },
-            { title: 'Creating Models', href: '/models', description: 'Define models for your data' },
-            { title: 'Creating Controllers', href: '/controllers', description: 'Build controllers to handle requests' },
-            { title: 'Creating Migrations', href: '/migrations', description: 'Manage database schema changes' },
-            { title: 'Creating Seeders', href: '/seeders', description: 'Populate your database with test data' },
-            { title: 'Creating Services', href: '/services', description: 'Organize your business logic' },
-            { title: 'Creating Events', href: '/events', description: 'Implement event-driven architecture' },
-            { title: 'Validation Rules', href: '/validation', description: 'Validate incoming data' },
-            { title: 'Creating Jobs', href: '/jobs', description: 'Handle background tasks' },
-            { title: 'Creating Listeners', href: '/listeners', description: 'Respond to events' },
-            { title: 'Creating Middleware', href: '/middleware', description: 'Filter HTTP requests' },
-          ].map((item, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <Card sx={{ height: '100%' }}>
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {item.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {item.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" component={Link} href={item.href}>Read More</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-        
-        <Grid container spacing={2} sx={{ mt: 2 }}>
-          {[
-            { title: 'Creating Helpers', href: '/helpers', description: 'Create reusable helper functions' },
+            { title: 'Models', href: '/models', description: 'Define models for your data' },
+            { title: 'Controllers', href: '/controllers', description: 'Build controllers to handle requests' },
+            { title: 'Migrations', href: '/migrations', description: 'Manage database schema changes' },
+            { title: 'Seeders', href: '/seeders', description: 'Populate your database with test data' },
+            { title: 'Services', href: '/services', description: 'Organize your business logic' },
+            { title: 'Events & Listeners', href: '/events', description: 'Implement event-driven architecture' },
+            { title: 'Job Queue & Scheduling', href: '/jobs', description: 'Manage job queues and scheduled tasks' },
+            { title: 'Middleware & Authentication', href: '/middleware', description: 'Filter HTTP requests and implement authentication' },
+            { title: 'Helpers', href: '/helpers', description: 'Create reusable helper functions' },
             { title: 'Routing', href: '/routing', description: 'Define routes for your application' },
-            { title: 'Authentication', href: '/authentication', description: 'Implement user authentication' },
             { title: 'Filesystem Operations', href: '/filesystem', description: 'Work with files and directories' },
-            { title: 'Creating Templates', href: '/templates', description: 'Build dynamic templates' },
+            { title: 'Templates', href: '/templates', description: 'Build dynamic templates' },
             { title: 'Sending Mail', href: '/mail', description: 'Send emails from your application' },
             { title: 'Notifications', href: '/notifications', description: 'Send notifications to users' },
             { title: 'Logging', href: '/logging', description: 'Log application events' },
             { title: 'Caching', href: '/caching', description: 'Improve performance with caching' },
-            { title: 'Debugging', href: '/debugging', description: 'Debug your application' },
-            { title: 'Validation Rules', href: '/validation-rules', description: 'Explore all validation rules' },
-            { title: 'Job Queues', href: '/queues', description: 'Manage job queues' },
-          ].map((item, index) => (
-            <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-              <Card sx={{ height: '100%' }}>
-                <CardContent>
-                  <Typography variant="h6" component="div">
-                    {item.title}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {item.description}
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button size="small" component={Link} href={item.href}>Read More</Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-        
-        <Grid container spacing={2} sx={{ mt: 2 }}>
-          {[
-            { title: 'Testing', href: '/testing', description: 'Write tests for your application' },
+            { title: 'Validation and Rules', href: '/validation-rules', description: 'Explore all validation rules' },
+            { title: 'Session And Cookies', href: '/session-cookies', description: 'Manage sessions and cookies' },
             { title: 'Luna CLI', href: '/luna-cli', description: 'Use the command-line interface' },
           ].map((item, index) => (
             <Grid item xs={12} sm={6} md={4} lg={3} key={index}>

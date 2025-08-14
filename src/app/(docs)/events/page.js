@@ -6,75 +6,145 @@ export default function Events() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
-        Events
+        Events & Listeners
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Rivulet's event system provides a simple observer implementation, allowing you to subscribe and listen for events in your application.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Database Configuration
+        Core Commands
+      </Typography>
+      
+      <Box sx={{ mb: 3, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+        <Typography variant="h6" component="h3" gutterBottom>
+          Event System Commands
+        </Typography>
+        <CodeBlock 
+          bashCode="# Create a new event\nphp luna create:event ArticleUpdated\n\n# Create a new listener\nphp luna create:listener SendArticleUpdateNotification\n\n# Register events in config/events.php"
+        />
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Event System Overview
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        The event system consists of three main components:
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4, mb: 3 }}>
+        <li><Typography variant="body1"><strong>Events</strong> - Simple objects that represent something that happened</Typography></li>
+        <li><Typography variant="body1"><strong>Listeners</strong> - Classes that perform actions in response to events</Typography></li>
+        <li><Typography variant="body1"><strong>Dispatcher</strong> - Manages the event-listener relationships</Typography></li>
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Creating Events
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Generate a new event class:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Configure your database in .env file\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=rivulet\nDB_USERNAME=root\nDB_PASSWORD="
-        phpCode="<?php\n// Database configuration\nreturn [\n    'default' => env('DB_CONNECTION', 'mysql'),\n    'connections' => [\n        'mysql' => [\n            'driver' => 'mysql',\n            'host' => env('DB_HOST', '127.0.0.1'),\n            'port' => env('DB_PORT', '3306'),\n            'database' => env('DB_DATABASE', 'rivulet'),\n            'username' => env('DB_USERNAME', 'root'),\n            'password' => env('DB_PASSWORD', ''),\n        ],\n    ],\n];"
+        bashCode="php luna create:event ArticleDeleted"
+        textCode="Creates: app/Events/ArticleDeleted.php"
       />
       
-      <Typography variant="h4" component="h2" gutterBottom>
-        ORM (Object-Relational Mapping)
-      </Typography>
-      
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Example event class:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
+        phpCode={`<?php\n\nnamespace App\\Events;\n\nuse Rivulet\\Events\\Event;\n\nclass ArticleDeleted extends Event\n{\n    /**\n     * Create new event instance\n     */\n    public function __construct(public \$articleId)\n    {\n        parent::__construct(['id' => \$articleId]);\n    }\n}`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations
+        Creating Listeners
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Generate a new listener class:
       </Typography>
       
       <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\n// Create\n$user = new User();\n$user->name = 'John Doe';\n$user->email = 'john@example.com';\n$user->password = bcrypt('password');\n$user->save();\n\n// Read\n$users = User::all();\n$user = User::find(1);\n\n// Update\n$user = User::find(1);\n$user->name = 'Jane Doe';\n$user->save();\n\n// Delete\n$user = User::find(1);\n$user->delete();"
+        bashCode="php luna create:listener SendDeleteNotification"
+        textCode="Creates: app/Listeners/SendDeleteNotification.php"
+      />
+      
+      <Typography variant="body1" paragraph>
+        Example listener class:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`<?php\n\nnamespace App\\Listeners;\n\nuse App\\Events\\ArticleDeleted;\nuse Rivulet\\Events\\Listener;\n\nclass SendDeleteNotification extends Listener\n{\n    public function handle(ArticleDeleted \$event): void\n    {\n        \$articleId = \$event->getData()['id'];\n        // Send notification logic here\n    }\n}`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Relationships
+        Registering Events
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Register event-listener relationships in <code>config/events.php</code>:
       </Typography>
       
-  <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
-        htmlCode="<!-- Database commands example -->\n<div class='database-commands'>\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>"
+      <CodeBlock 
+        phpCode={`<?php\n\nreturn [\n    'App\\Events\\ArticleDeleted' => [\n        'App\\Listeners\\SendDeleteNotification',\n        'App\\Listeners\\LogArticleDeletion',\n        'App\\Listeners\\UpdateSearchIndex'\n    ],\n    \n    'App\\Events\\UserRegistered' => [\n        'App\\Listeners\\SendWelcomeEmail',\n        'App\\Listeners\\CreateUserProfile'\n    ]\n];`}
       />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Dispatching Events
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Trigger events from anywhere in your application:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`// With constructor data\n\$event = new App\\Events\\ArticleDeleted(\$articleId);\nTriggerEvent(\$event);\n\n// Or with array data\nTriggerEvent('ArticleDeleted', ['id' => \$articleId]);`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Complete Example
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        1. First create the event and listener:
+      </Typography>
+      
+      <CodeBlock 
+        bashCode="php luna create:event OrderShipped\nphp luna create:listener SendShipmentNotification"
+      />
+      
+      <Typography variant="body1" paragraph>
+        2. Configure the relationship in <code>config/events.php</code>:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`<?php\n\nreturn [\n    'App\\Events\\OrderShipped' => [\n        'App\\Listeners\\SendShipmentNotification'\n    ]\n];`}
+      />
+      
+      <Typography variant="body1" paragraph>
+        3. Dispatch the event when an order ships:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`// In your OrderController\npublic function ship(\$orderId)\n{\n    // Ship the order...\n    \n    // Dispatch event\n    TriggerEvent('OrderShipped', [\n        'order_id' => \$orderId,\n        'customer_id' => \$customerId\n    ]);\n}`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Best Practices
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Use events for side effects, not core business logic</Typography></li>
+        <li><Typography variant="body1">Keep listeners small and focused</Typography></li>
+        <li><Typography variant="body1">Document expected event payloads</Typography></li>
+        <li><Typography variant="body1">Consider queueing long-running listeners</Typography></li>
+        <li><Typography variant="body1">Name events in past tense (e.g. OrderShipped, UserRegistered)</Typography></li>
+      </Box>
     </Box>
   );
 }

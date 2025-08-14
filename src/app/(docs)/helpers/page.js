@@ -6,75 +6,122 @@ export default function Helpers() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
-        Helpers
+        Helpers System
       </Typography>
-      
+
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Rivulet provides a rich set of helper functions that are globally available throughout your application. These helpers simplify common tasks and provide convenient shortcuts to framework functionality.
       </Typography>
-      
+
       <Typography variant="h4" component="h2" gutterBottom>
-        Database Configuration
+        Built-in Helpers
       </Typography>
-      
+
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        The framework comes with these essential helpers pre-loaded:
       </Typography>
-      
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Application Helpers
+      </Typography>
       <CodeBlock 
-        bashCode="# Configure your database in .env file\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=rivulet\nDB_USERNAME=root\nDB_PASSWORD="
-        phpCode="<?php\n// Database configuration\nreturn [\n    'default' => env('DB_CONNECTION', 'mysql'),\n    'connections' => [\n        'mysql' => [\n            'driver' => 'mysql',\n            'host' => env('DB_HOST', '127.0.0.1'),\n            'port' => env('DB_PORT', '3306'),\n            'database' => env('DB_DATABASE', 'rivulet'),\n            'username' => env('DB_USERNAME', 'root'),\n            'password' => env('DB_PASSWORD', ''),\n        ],\n    ],\n];"
+        phpCode={`// Get application instance\napp();\n\n// Get environment variable\nenv('APP_ENV', 'production');\n\n// Get configuration value\nconfig('database.default');`}
       />
-      
-      <Typography variant="h4" component="h2" gutterBottom>
-        ORM (Object-Relational Mapping)
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Routing Helpers
       </Typography>
-      
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-      </Typography>
-      
       <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
+        phpCode={`// Define route\nroute('GET', '/path', 'Controller@method');\n\n// Group routes with prefix\nprefix('api', function() {\n    route('GET', '/users', 'UserController@index');\n});\n\n// Apply middleware\ngroup('middleware=auth', function() {\n    route('GET', '/profile', 'ProfileController@show');\n});`}
       />
-      
-      <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Response Helpers
       </Typography>
-      
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-      </Typography>
-      
       <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\n// Create\n$user = new User();\n$user->name = 'John Doe';\n$user->email = 'john@example.com';\n$user->password = bcrypt('password');\n$user->save();\n\n// Read\n$users = User::all();\n$user = User::find(1);\n\n// Update\n$user = User::find(1);\n$user->name = 'Jane Doe';\n$user->save();\n\n// Delete\n$user = User::find(1);\n$user->delete();"
+        phpCode={`// Success response\njsonSuccess(['data' => \$results]);\n\n// Error response\njsonError('Invalid input', 422);`}
       />
-      
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Security Helpers
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Password hashing\n\$hash = PassEncrypt('password123');\n\n// Password verification\nif (PassVerify('password123', \$hash)) {\n    // Valid password\n}`}
+      />
+
       <Typography variant="h4" component="h2" gutterBottom>
-        Relationships
+        Creating Custom Helpers
       </Typography>
-      
+
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        You can create your own helper files in the <code>app/Helpers</code> directory. These files are auto-loaded and their functions become globally available.
       </Typography>
-      
-  <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
-        htmlCode="<!-- Database commands example -->\n<div class='database-commands'>\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>"
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Example Helper File
+      </Typography>
+      <CodeBlock 
+        bashCode="# Create new helper file\ntouch app/Helpers/slug.php"
+        phpCode={`<?php\n\n// app/Helpers/slug.php\nfunction article_slug(\$title)\n{\n    return str_replace(' ', '-', strtolower(\$title));\n}`}
       />
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Using Custom Helpers
+      </Typography>
+      <CodeBlock 
+        phpCode={`// In controller\npublic function addArticle()\n{\n    \$data = \$this->request->input();\n    \$data['slug'] = article_slug(\$data['title']);\n    // ...\n}`}
+      />
+
+      <Typography variant="h4" component="h2" gutterBottom>
+        Helper Categories
+      </Typography>
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Logging Helpers
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Log message\nLogMessage('User logged in', 'info');`}
+      />
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Cache Helpers
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Get cached value\n\$value = GetCache('key');\n\n// Store in cache\nPutCache('key', \$value, 3600);`}
+      />
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Validation Helpers
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Validate data\nvalidate(\$input, [\n    'email' => 'required|email',\n    'password' => 'required|min:8'\n]);`}
+      />
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Session Helpers
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Set session\nSetSession('user_id', 123);\n\n// Get session\n\$userId = GetSession('user_id');\n\n// Flash session\nFlashSession('message', 'Success!');`}
+      />
+
+      <Typography variant="h6" component="h3" gutterBottom>
+        Date Helpers
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Carbon instance\n\$tomorrow = carbon('tomorrow');`}
+      />
+
+      <Typography variant="h4" component="h2" gutterBottom>
+        Best Practices
+      </Typography>
+
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Group related helpers in logical files</Typography></li>
+        <li><Typography variant="body1">Prefix helper names to avoid collisions</Typography></li>
+        <li><Typography variant="body1">Keep helpers focused on single tasks</Typography></li>
+        <li><Typography variant="body1">Document helper functions with PHPDoc</Typography></li>
+        <li><Typography variant="body1">Test helpers thoroughly</Typography></li>
+      </Box>
     </Box>
   );
 }

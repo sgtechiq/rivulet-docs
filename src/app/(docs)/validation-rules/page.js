@@ -2,79 +2,206 @@ import React from 'react';
 import { Typography, Box } from '@mui/material';
 import CodeBlock from '@/components/CodeBlock';
 
-export default function ValidationRules() {
+export default function ValidationSystem() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
-        Validation Rules
+        Validation System
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Rivulet provides a robust validation system with built-in rules and support for custom rules.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Database Configuration
-      </Typography>
-      
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Basic Usage in Controllers
       </Typography>
       
       <CodeBlock 
-        bashCode="# Configure your database in .env file\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=rivulet\nDB_USERNAME=root\nDB_PASSWORD="
-        phpCode="<?php\n// Database configuration\nreturn [\n    'default' => env('DB_CONNECTION', 'mysql'),\n    'connections' => [\n        'mysql' => [\n            'driver' => 'mysql',\n            'host' => env('DB_HOST', '127.0.0.1'),\n            'port' => env('DB_PORT', '3306'),\n            'database' => env('DB_DATABASE', 'rivulet'),\n            'username' => env('DB_USERNAME', 'root'),\n            'password' => env('DB_PASSWORD', ''),\n        ],\n    ],\n];"
+        phpCode={`// From UsersController::store()
+\$data = \$this->request->input();
+\$this->validate(\$data, [
+    'name' => 'required|string',
+    'email' => 'required|email',
+    'username' => 'required|string',
+    'password' => 'required|string'
+]);`}
       />
       
+      <Typography variant="body1" paragraph sx={{ mt: 2 }}>
+        The <code>validate()</code> method throws an exception with JSON-formatted errors if validation fails.
+      </Typography>
+      
       <Typography variant="h4" component="h2" gutterBottom>
-        ORM (Object-Relational Mapping)
+        Available Validation Rules
+      </Typography>
+      
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h5" component="h3" gutterBottom>
+          Required Fields
+        </Typography>
+        <CodeBlock phpCode={`'field' => 'required'`} />
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          String Validation
+        </Typography>
+        <CodeBlock phpCode={`'field' => 'string'`} />
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          Email Validation
+        </Typography>
+        <CodeBlock phpCode={`'field' => 'email'`} />
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          Numeric Validation
+        </Typography>
+        <CodeBlock phpCode={`'field' => 'integer'`} />
+        <CodeBlock phpCode={`'field' => 'numeric'`} />
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          Length Validation
+        </Typography>
+        <CodeBlock phpCode={`'field' => 'min:5'`} />
+        <CodeBlock phpCode={`'field' => 'max:255'`} />
+        <CodeBlock phpCode={`'field' => 'between:3,20'`} />
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          File Validation
+        </Typography>
+        <CodeBlock phpCode={`'file' => 'file:jpg,png,pdf'`} />
+        <CodeBlock phpCode={`'file' => 'filesize:2048'`} /> {/* 2KB max */}
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          Date Validation
+        </Typography>
+        <CodeBlock phpCode={`'date' => 'date'`} /> {/* Default Y-m-d */}
+        <CodeBlock phpCode={`'date' => 'date:Y-m-d H:i:s'`} />
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          Other Rules
+        </Typography>
+        <CodeBlock phpCode={`'ip' => 'ip'`} />
+        <CodeBlock phpCode={`'url' => 'url'`} />
+        <CodeBlock phpCode={`'alpha' => 'alpha'`} /> {/* Letters only */}
+        <CodeBlock phpCode={`'alphanum' => 'alphanum'`} /> {/* Letters & numbers */}
+        <CodeBlock phpCode={`'array' => 'array'`} />
+        <CodeBlock phpCode={`'bool' => 'bool'`} />
+        <CodeBlock phpCode={`'regex' => 'regex:/^[a-z]+$/i'`} />
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Creating Custom Rules
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Generate a new rule using the console command:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
+        bashCode={`php luna make:rule UniqueUsername`}
       />
       
-      <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations
-      </Typography>
-      
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+      <Typography variant="body1" paragraph sx={{ mt: 2 }}>
+        This creates a template in <code>app/Rules/UniqueUsername.php</code>:
       </Typography>
       
       <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\n// Create\n$user = new User();\n$user->name = 'John Doe';\n$user->email = 'john@example.com';\n$user->password = bcrypt('password');\n$user->save();\n\n// Read\n$users = User::all();\n$user = User::find(1);\n\n// Update\n$user = User::find(1);\n$user->name = 'Jane Doe';\n$user->save();\n\n// Delete\n$user = User::find(1);\n$user->delete();"
+        phpCode={`<?php
+
+namespace App\\Rules;
+
+use Rivulet\\Validation\\Rule;
+
+class UniqueUsername implements Rule
+{
+    public function passes(string \$field, \$value): bool
+    {
+        // Check if username is unique
+        return !User::where('username', \$value)->exists();
+    }
+
+    public function message(string \$field): string
+    {
+        return "The {\$field} is already taken";
+    }
+}`}
+      />
+      
+      <Typography variant="body1" paragraph sx={{ mt: 2 }}>
+        Use your custom rule:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`'username' => 'required|string|unique_username'`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Relationships
+        Namespaced Rules
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Create rules in subdirectories for better organization:
       </Typography>
       
-  <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
-        htmlCode="<!-- Database commands example -->\n<div class='database-commands'>\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>"
+      <CodeBlock 
+        bashCode={`php luna make:rule Auth/StrongPassword`}
       />
+      
+      <CodeBlock 
+        phpCode={`<?php
+
+namespace App\\Rules\\Auth;
+
+use Rivulet\\Validation\\Rule;
+
+class StrongPassword implements Rule
+{
+    public function passes(string \$field, \$value): bool
+    {
+        return strlen(\$value) >= 8 
+            && preg_match('/[A-Z]/', \$value)
+            && preg_match('/[0-9]/', \$value);
+    }
+
+    public function message(string \$field): string
+    {
+        return "The {\$field} must be at least 8 characters with 1 number and 1 uppercase letter";
+    }
+}`}
+      />
+      
+      <Typography variant="body1" paragraph sx={{ mt: 2 }}>
+        Use namespaced rules:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`'password' => 'required|auth.strong_password'`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Error Handling
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`try {
+    \$this->validate(\$data, \$rules);
+} catch (\\Exception \$e) {
+    \$errors = json_decode(\$e->getMessage(), true);
+    // Handle validation errors
+}`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Best Practices
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Validate early - validate requests at the controller level</Typography></li>
+        <li><Typography variant="body1">Use specific validation rules</Typography></li>
+        <li><Typography variant="body1">Create custom rules for complex validation logic</Typography></li>
+        <li><Typography variant="body1">Organize rules in namespaces for large applications</Typography></li>
+        <li><Typography variant="body1">Provide clear, user-friendly error messages</Typography></li>
+      </Box>
     </Box>
   );
 }

@@ -6,59 +6,93 @@ export default function Controllers() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
-        Creating Controllers and Using CRUD
-      </Typography>
-      
-      <Typography variant="body1">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-      </Typography>
-      
-      <Typography variant="h4" component="h2" gutterBottom>
-        Creating a Controller
-      </Typography>
-      
-      <Typography variant="body1" >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-      </Typography>
-      
-      <CodeBlock 
-        bashCode="# Create a new controller\nphp luna make:controller UserController"
-        phpCode="<?php\nnamespace App\\Controllers;\n\nuse App\\Models\\User;\nuse Rivulet\\Http\\Controller;\n\nclass UserController extends Controller\n{\n    public function index()\n    {\n        $users = User::all();\n        return response()->json($users);\n    }\n    \n    public function show($id)\n    {\n        $user = User::find($id);\n        return response()->json($user);\n    }\n}"
-      />
-      
-      <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations in Controllers
-      </Typography>
-      
-      <Typography variant="body1" >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-      </Typography>
-      
-      <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\nnamespace App\\Controllers;\n\nuse App\\Models\\User;\nuse Rivulet\\Http\\Controller;\nuse Rivulet\\Http\\Request;\n\nclass UserController extends Controller\n{\n    // GET /users\n    public function index()\n    {\n        $users = User::all();\n        return response()->json($users);\n    }\n    \n    // POST /users\n    public function store(Request $request)\n    {\n        $user = User::create($request->all());\n        return response()->json($user, 201);\n    }\n    \n    // GET /users/{id}\n    public function show($id)\n    {\n        $user = User::find($id);\n        return response()->json($user);\n    }\n    \n    // PUT /users/{id}\n    public function update(Request $request, $id)\n    {\n        $user = User::find($id);\n        $user->update($request->all());\n        return response()->json($user);\n    }\n    \n    // DELETE /users/{id}\n    public function destroy($id)\n    {\n        $user = User::find($id);\n        $user->delete();\n        return response()->json(null, 204);\n    }\n}"
-      />
-      
-      <Typography variant="h4" component="h2" gutterBottom>
-        Resource Controllers
+        Controllers
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Controllers in Rivulet handle HTTP requests and contain the application logic. They serve as intermediaries between models and views, processing input and returning responses.
+      </Typography>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Creating Controllers
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Generate a new controller using the Luna command line tool:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Create a resource controller\nphp luna make:controller UserController --resource"
-        phpCode="<?php\nnamespace App\\Controllers;\n\nuse App\\Models\\User;\nuse Rivulet\\Http\\Controller;\nuse Rivulet\\Http\\Request;\n\nclass UserController extends Controller\n{\n    /**\n     * Display a listing of the resource.\n     */\n    public function index()\n    {\n        $users = User::all();\n        return response()->json($users);\n    }\n    \n    /**\n     * Store a newly created resource in storage.\n     */\n    public function store(Request $request)\n    {\n        $user = User::create($request->all());\n        return response()->json($user, 201);\n    }\n    \n    /**\n     * Display the specified resource.\n     */\n    public function show($id)\n    {\n        $user = User::find($id);\n        return response()->json($user);\n    }\n    \n    /**\n     * Update the specified resource in storage.\n     */\n    public function update(Request $request, $id)\n    {\n        $user = User::find($id);\n        $user->update($request->all());\n        return response()->json($user);\n    }\n    \n    /**\n     * Remove the specified resource from storage.\n     */\n    public function destroy($id)\n    {\n        $user = User::find($id);\n        $user->delete();\n        return response()->json(null, 204);\n    }\n}"
+        bashCode="php luna create:controller User"
+        textCode="Creates: app/Controllers/UserController.php"
       />
+      
+      <Typography variant="body1" paragraph>
+        For namespaced controllers:
+      </Typography>
+      
+      <CodeBlock 
+        bashCode="php luna create:controller Admin/User"
+        textCode="Creates: app/Controllers/Admin/UserController.php"
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Base Controller Features
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        All controllers extend the base Controller class which provides these services:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode="<?php\nnamespace Rivulet;\n\nclass Controller\n{\n    protected $request;      // HTTP Request\n    protected $response;     // HTTP Response\n    protected $filesystem;   // File system access\n    protected $view;         // Template rendering\n    protected $mail;         // Email services\n    protected $notification; // Notification system\n    protected $http;         // HTTP client\n    protected $session;      // Session management\n    protected $cookie;       // Cookie handling\n}"
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Controller Methods
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        A standard CRUD controller includes these methods:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode="<?php\nclass UserController extends Controller\n{\n    // List all users\n    public function list() {}\n    \n    // Show single user\n    public function show(\$id) {}\n    \n    // Create new user\n    public function store() {}\n    \n    // Update user\n    public function edit(\$id) {}\n    \n    // Soft delete user\n    public function delete(\$id) {}\n    \n    // Permanent delete\n    public function destroy(\$id) {}\n}"
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Example Controller Implementation
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Here's a complete UserController example:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`<?php\nnamespace App\\Controllers;\n\nuse App\\Models\\User;\nuse Rivulet\\Controller;\n\nclass UserController extends Controller\n{\n    public function list()\n    {\n        return User::all();\n    }\n\n    public function show(\$id)\n    {\n        \$this->validate(['id' => \$id], ['id' => 'required|integer']);\n        \$user = User::find(\$id);\n        return \$user ?: \$this->jsonError('Not found', 404);\n    }\n\n    public function store()\n    {\n        \$data = \$this->request->input();\n        \$this->validate(\$data, [\n            'name' => 'required|string',\n            'email' => 'required|email|unique:users',\n            'password' => 'required|min:8'\n        ]);\n        \n        \$data['password'] = bcrypt(\$data['password']);\n        return User::create(\$data);\n    }\n\n    public function edit(\$id)\n    {\n        \$user = User::findOrFail(\$id);\n        \$data = \$this->request->input();\n        \n        \$this->validate(\$data, [\n            'name' => 'sometimes|string',\n            'email' => 'sometimes|email|unique:users,email,'.\$id,\n            'password' => 'sometimes|min:8'\n        ]);\n        \n        if (isset(\$data['password'])) {\n            \$data['password'] = bcrypt(\$data['password']);\n        }\n        \n        \$user->update(\$data);\n        return \$user;\n    }\n\n    public function delete(\$id)\n    {\n        User::findOrFail(\$id)->delete();\n        return \$this->jsonSuccess('User archived');\n    }\n\n    public function destroy(\$id)\n    {\n        User::findOrFail(\$id)->forceDelete();\n        return \$this->jsonSuccess('User permanently deleted');\n    }\n}`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Common Controller Patterns
+      </Typography>
+      
+      <Typography variant="h6" component="h3" gutterBottom>
+        JSON Responses
+      </Typography>
+      
+      <CodeBlock 
+        phpCode="<?php\n// Success response\nreturn \$this->json(['data' => \$results]);\n\n// Error response\nreturn \$this->json(['error' => 'Not found'], 404);"
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Best Practices
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Keep controllers focused on HTTP logic</Typography></li>
+        <li><Typography variant="body1">Move business logic to service classes</Typography></li>
+        <li><Typography variant="body1">Use dependency injection for services</Typography></li>
+        <li><Typography variant="body1">Follow RESTful conventions for resource controllers</Typography></li>
+      </Box>
     </Box>
   );
 }

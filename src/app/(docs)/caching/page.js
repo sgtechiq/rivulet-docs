@@ -2,79 +2,124 @@ import React from 'react';
 import { Typography, Box } from '@mui/material';
 import CodeBlock from '@/components/CodeBlock';
 
-export default function Cache() {
+export default function CachingSystem() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
-        Caching Strategies
+        Caching System
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Rivulet provides a simple file-based caching system with automatic expiration and helper functions.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Database Configuration
+        Configuration
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        The cache is configured in your application's service container. Default path:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Configure your database in .env file\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=rivulet\nDB_USERNAME=root\nDB_PASSWORD="
-        phpCode="<?php\n// Database configuration\nreturn [\n    'default' => env('DB_CONNECTION', 'mysql'),\n    'connections' => [\n        'mysql' => [\n            'driver' => 'mysql',\n            'host' => env('DB_HOST', '127.0.0.1'),\n            'port' => env('DB_PORT', '3306'),\n            'database' => env('DB_DATABASE', 'rivulet'),\n            'username' => env('DB_USERNAME', 'root'),\n            'password' => env('DB_PASSWORD', ''),\n        ],\n    ],\n];"
+        bashCode={`storage/cache/`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        ORM (Object-Relational Mapping)
+        Global Helpers
+      </Typography>
+      
+      <Typography variant="h5" component="h3" gutterBottom>
+        Storing Items
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Store for 1 hour (default)
+PutCache('user_123', \$userData);
+
+// Store with custom TTL (in seconds)
+PutCache('popular_posts', \$posts, 86400); // 24 hours`}
+      />
+      
+      <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+        Retrieving Items
+      </Typography>
+      <CodeBlock 
+        phpCode={`// Get cached value or return null
+\$data = GetCache('user_123');
+
+// Get with default value
+\$data = GetCache('non_existent_key', ['default' => 'value']);`}
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Console Command
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Clear all cached items:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
+        bashCode={`php luna cache:clear`}
       />
       
+      <Typography variant="body1" paragraph sx={{ mt: 2 }}>
+        This removes all cache files from the storage directory.
+      </Typography>
+      
       <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations
+        Examples
       </Typography>
       
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+      <Typography variant="h5" component="h3" gutterBottom>
+        Database Query Caching
       </Typography>
-      
       <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\n// Create\n$user = new User();\n$user->name = 'John Doe';\n$user->email = 'john@example.com';\n$user->password = bcrypt('password');\n$user->save();\n\n// Read\n$users = User::all();\n$user = User::find(1);\n\n// Update\n$user = User::find(1);\n$user->name = 'Jane Doe';\n$user->save();\n\n// Delete\n$user = User::find(1);\n$user->delete();"
+        phpCode={`\$posts = GetCache('latest_posts');
+        
+if (!\$posts) {
+    \$posts = Post::latest()->limit(10)->get();
+    PutCache('latest_posts', \$posts, 3600); // Cache for 1 hour
+}`}
+      />
+      
+      <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+        View Fragment Caching
+      </Typography>
+      <CodeBlock 
+        phpCode={`\$html = GetCache('sidebar_html');
+
+if (!\$html) {
+    \$html = view('partials.sidebar', \$data)->render();
+    PutCache('sidebar_html', \$html, 1800); // Cache for 30 minutes
+}
+
+echo \$html;`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Relationships
+        Best Practices
       </Typography>
       
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Use descriptive cache keys (e.g., 'user_123_profile')</Typography></li>
+        <li><Typography variant="body1">Set appropriate TTL based on data volatility</Typography></li>
+        <li><Typography variant="body1">Clear cache after data updates</Typography></li>
+        <li><Typography variant="body1">Avoid caching sensitive information</Typography></li>
+        <li><Typography variant="body1">Consider cache size for large datasets</Typography></li>
+        <li><Typography variant="body1">Implement cache fallbacks for critical data</Typography></li>
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Technical Details
       </Typography>
       
-  <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
-        htmlCode="<!-- Database commands example -->\n<div class='database-commands'>\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>"
-      />
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Cache files stored with <code>.cache</code> extension</Typography></li>
+        <li><Typography variant="body1">Keys are MD5-hashed for filename safety</Typography></li>
+        <li><Typography variant="body1">Automatic expiration check on retrieval</Typography></li>
+        <li><Typography variant="body1">Thread-safe file operations</Typography></li>
+      </Box>
     </Box>
   );
 }

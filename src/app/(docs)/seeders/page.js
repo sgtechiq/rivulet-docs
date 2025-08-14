@@ -6,75 +6,113 @@ export default function Seeders() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
-        Seeders
+        Database Seeders
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Seeders allow you to populate your database with test or initial data. They are particularly useful during development and testing.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Database Configuration
+        Seeder Commands
+      </Typography>
+      
+      <Box sx={{ mb: 3, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+        <Typography variant="h6" component="h3" gutterBottom>
+          Primary Seeder Commands
+        </Typography>
+        <CodeBlock 
+          bashCode="# Create a new seeder class\nphp luna create:seeder SeederName\n\n# Run all database seeders\nphp luna database:seed\n\n# Run specific seeder only\nphp luna database:seed --class=SeederName"
+        />
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Creating Seeders
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Generate a new seeder class with boilerplate code:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Configure your database in .env file\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=rivulet\nDB_USERNAME=root\nDB_PASSWORD="
-        phpCode="<?php\n// Database configuration\nreturn [\n    'default' => env('DB_CONNECTION', 'mysql'),\n    'connections' => [\n        'mysql' => [\n            'driver' => 'mysql',\n            'host' => env('DB_HOST', '127.0.0.1'),\n            'port' => env('DB_PORT', '3306'),\n            'database' => env('DB_DATABASE', 'rivulet'),\n            'username' => env('DB_USERNAME', 'root'),\n            'password' => env('DB_PASSWORD', ''),\n        ],\n    ],\n];"
+        bashCode="php luna create:seeder User"
+        textCode="Creates: database/Seeders/UserSeeder.php"
       />
       
-      <Typography variant="h4" component="h2" gutterBottom>
-        ORM (Object-Relational Mapping)
-      </Typography>
-      
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        The generated file will contain:
       </Typography>
       
       <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
+        phpCode={`<?php\n\nnamespace Database\\Seeders;\n\nuse App\\Models\\User;\nuse Rivulet\\Database\\Migrations\\SeedOperation;\n\nclass UserSeeder extends SeedOperation\n{\n    public function run()\n    {\n        // Seeding logic here\n    }\n}`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations
+        Running Seeders
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Execute all seeders:
       </Typography>
       
       <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\n// Create\n$user = new User();\n$user->name = 'John Doe';\n$user->email = 'john@example.com';\n$user->password = bcrypt('password');\n$user->save();\n\n// Read\n$users = User::all();\n$user = User::find(1);\n\n// Update\n$user = User::find(1);\n$user->name = 'Jane Doe';\n$user->save();\n\n// Delete\n$user = User::find(1);\n$user->delete();"
+        bashCode="php luna database:seed"
+      />
+      
+      <Typography variant="body1" paragraph>
+        Run a specific seeder:
+      </Typography>
+      
+      <CodeBlock 
+        bashCode="php luna database:seed --class=UserSeeder"
+      />
+      
+      <Typography variant="body1" paragraph>
+        Combine with migrations:
+      </Typography>
+      
+      <CodeBlock 
+        bashCode="php luna database:migrate --seed"
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Relationships
+        Example Usage
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        1. First create the seeder:
       </Typography>
       
-  <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
-        htmlCode="<!-- Database commands example -->\n<div class='database-commands'>\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>"
+      <CodeBlock 
+        bashCode="php luna create:seeder AdminUser"
       />
+      
+      <Typography variant="body1" paragraph>
+        2. Then edit the seeder file:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode={`<?php\n\nnamespace Database\\Seeders;\n\nuse App\\Models\\User;\nuse Rivulet\\Database\\Migrations\\SeedOperation;\n\nclass AdminUserSeeder extends SeedOperation\n{\n    public function run()\n    {\n        User::create([\n            'name' => 'Admin',\n            'email' => 'admin@example.com',\n            'password' => PassEncrypt('secret'),\n            'is_admin' => true\n        ]);\n    }\n}`}
+      />
+      
+      <Typography variant="body1" paragraph>
+        3. Finally run the seeder:
+      </Typography>
+      
+      <CodeBlock 
+        bashCode="php luna database:seed --class=AdminUserSeeder"
+      />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Best Practices
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Use seeders for development/test data only</Typography></li>
+        <li><Typography variant="body1">Never include sensitive credentials in seeders</Typography></li>
+        <li><Typography variant="body1">Consider using environment checks in seeders</Typography></li>
+        <li><Typography variant="body1">Document your seeders in project documentation</Typography></li>
+      </Box>
     </Box>
   );
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography, Box } from '@mui/material';
 import CodeBlock from '@/components/CodeBlock';
 
-export default function Template() {
+export default function TemplateEngine() {
   return (
     <Box>
       <Typography variant="h3" component="h1" gutterBottom>
@@ -10,73 +10,83 @@ export default function Template() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+        Rivulet's lightweight template engine handles basic variable replacement and array iteration with a simple syntax.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
-        Database Configuration
+        Core Command
       </Typography>
       
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+      <Box sx={{ mb: 3, p: 2, bgcolor: '#f5f5f5', borderRadius: 1 }}>
+        <Typography variant="h6" component="h3" gutterBottom>
+          Template Creation
+        </Typography>
+        <CodeBlock 
+          bashCode="# Create new template\nphp luna create:template welcome\n\n# Create nested directory template\nphp luna create:template emails/verification"
+        />
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Configuration
       </Typography>
       
       <CodeBlock 
-        bashCode="# Configure your database in .env file\nDB_CONNECTION=mysql\nDB_HOST=127.0.0.1\nDB_PORT=3306\nDB_DATABASE=rivulet\nDB_USERNAME=root\nDB_PASSWORD="
-        phpCode="<?php\n// Database configuration\nreturn [\n    'default' => env('DB_CONNECTION', 'mysql'),\n    'connections' => [\n        'mysql' => [\n            'driver' => 'mysql',\n            'host' => env('DB_HOST', '127.0.0.1'),\n            'port' => env('DB_PORT', '3306'),\n            'database' => env('DB_DATABASE', 'rivulet'),\n            'username' => env('DB_USERNAME', 'root'),\n            'password' => env('DB_PASSWORD', ''),\n        ],\n    ],\n];"
+        phpCode={`<?php\n\nreturn [\n    'paths' => [\n        dirname(__DIR__) . '/resources/views', // Primary views directory\n    ],\n    \n    'extension' => '.html', // Default file extension\n    \n    'compiled' => dirname(__DIR__) . '/storage/cache/views', // Compiled templates\n];`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        ORM (Object-Relational Mapping)
+        Supported Syntax
       </Typography>
       
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
+      <Box sx={{ mb: 3 }}>
+        <Typography variant="h5" component="h3" gutterBottom>
+          Variable Replacement
+        </Typography>
+        <CodeBlock 
+          htmlCode={`<!-- Simple variable -->\n<title>{{$app_name}}</title>\n\n<!-- With optional spaces -->\n<p>Version: {{ $version }}</p>`}
+        />
+        <Typography variant="body2" color="text.secondary">
+          Note: Only direct variable access is supported. No filters or formatting.
+        </Typography>
+        
+        <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
+          Array Iteration
+        </Typography>
+        <CodeBlock 
+          htmlCode={`<!-- Loop through array -->\n{{map $links}}\n  <a href="{{$links.url}}">{{$links.text}}</a>\n{{end map}}`}
+        />
+        <Typography variant="body2" color="text.secondary">
+          Note: Only one-level deep iteration is supported.
+        </Typography>
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Built-in Templates
+      </Typography>
+      
+      <Box component="ul" sx={{ pl: 4, mb: 3 }}>
+        <li><Typography variant="body1"><code>404.html</code> - Not Found error page</Typography></li>
+        <li><Typography variant="body1"><code>unauthorized.html</code> - 403 Forbidden page</Typography></li>
+      </Box>
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Rendering Views
       </Typography>
       
       <CodeBlock 
-        bashCode="# Create a new model\nphp luna make:model User"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    protected $table = 'users';\n    \n    protected $fillable = [\n        'name', 'email', 'password',\n    ];\n}"
-        htmlCode={'<!-- Database commands example -->\n<div class=\"database-commands\">\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>'}
+        phpCode={`// From a controller\nreturn \$this->view('welcome', [\n    'app_name' => 'Rivulet',\n    'version' => '1.0',\n    'links' => [\n        ['url' => '/docs', 'text' => 'Documentation'],\n        ['url' => '/contact', 'text' => 'Contact']\n    ]\n]);\n\n// With nested directory structure\nreturn \$this->view('emails.verification', \$data);`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
-        CRUD Operations
+        Best Practices
       </Typography>
       
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-      </Typography>
-      
-      <CodeBlock 
-        bashCode="# No specific bash command for CRUD operations"
-        phpCode="<?php\n// Create\n$user = new User();\n$user->name = 'John Doe';\n$user->email = 'john@example.com';\n$user->password = bcrypt('password');\n$user->save();\n\n// Read\n$users = User::all();\n$user = User::find(1);\n\n// Update\n$user = User::find(1);\n$user->name = 'Jane Doe';\n$user->save();\n\n// Delete\n$user = User::find(1);\n$user->delete();"
-        htmlCode={'<!-- Database commands example -->\n<div class=\"database-commands\">\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>'}
-      />
-      
-      <Typography variant="h4" component="h2" gutterBottom>
-        Relationships
-      </Typography>
-      
-      <Typography variant="body1" paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Nullam auctor, nisl eget ultricies tincidunt, 
-        nisl nisl aliquam nisl, eget ultricies nisl nisl eget nisl.
-      </Typography>
-      
-      <CodeBlock 
-        bashCode="# No specific bash command for relationships"
-        phpCode="<?php\nnamespace App\\Models;\n\nuse Rivulet\\ORM\\Model;\n\nclass User extends Model\n{\n    public function posts()\n    {\n        return $this->hasMany(Post::class);\n    }\n}\n\nclass Post extends Model\n{\n    public function user()\n    {\n        return $this->belongsTo(User::class);\n    }\n}"
-        htmlCode={'<!-- Database commands example -->\n<div class=\"database-commands\">\n    <h2>Database Commands</h2>\n    <p>Database commands manage migrations and seeders.</p>\n</div>'}
-      />
+      <Box component="ul" sx={{ pl: 4 }}>
+        <li><Typography variant="body1">Keep business logic out of templates</Typography></li>
+        <li><Typography variant="body1">Pre-compute complex data in controllers</Typography></li>
+        <li><Typography variant="body1">Use clear variable names (<code>$user_name</code> vs <code>$un</code>)</Typography></li>
+        <li><Typography variant="body1">Document expected variables in template comments</Typography></li>
+      </Box>
     </Box>
   );
 }

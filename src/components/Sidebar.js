@@ -10,29 +10,24 @@ const menuItems = [
   { text: 'Getting Started', href: '/' },
   { text: 'Installation', href: '/installation' },
   { text: 'Database Connection', href: '/database' },
-  { text: 'Creating Models', href: '/models' },
-  { text: 'Creating Controllers', href: '/controllers' },
-  { text: 'Creating Migrations', href: '/migrations' },
-  { text: 'Creating Seeders', href: '/seeders' },
-  { text: 'Creating Services', href: '/services' },
-  { text: 'Creating Events', href: '/events' },
-  { text: 'Creating Jobs', href: '/jobs' },
-  { text: 'Creating Listeners', href: '/listeners' },
-  { text: 'Creating Middleware', href: '/middleware' },
-  { text: 'Creating Helpers', href: '/helpers' },
+  { text: 'Models', href: '/models' },
+  { text: 'Controllers', href: '/controllers' },
+  { text: 'Migrations', href: '/migrations' },
+  { text: 'Seeders', href: '/seeders' },
+  { text: 'Services', href: '/services' },
+  { text: 'Events & Listeners', href: '/events' },
+  { text: 'Job Queue & Scheduling', href: '/jobs' },
+  { text: 'Middleware & Authentication', href: '/middleware' },
+  { text: 'Helpers', href: '/helpers' },
   { text: 'Routing', href: '/routing' },
-  { text: 'Authentication', href: '/authentication' },
   { text: 'Filesystem Operations', href: '/filesystem' },
-  { text: 'Creating Templates', href: '/templates' },
+  { text: 'Templates', href: '/templates' },
   { text: 'Sending Mail', href: '/mail' },
   { text: 'Notifications', href: '/notifications' },
   { text: 'Logging', href: '/logging' },
   { text: 'Caching', href: '/caching' },
-  { text: 'Debugging', href: '/debugging' },
-  { text: 'Validation', href: '/validation' },
-  { text: 'Validation Rules', href: '/validation-rules' },
-  { text: 'Job Queues', href: '/queues' },
-  { text: 'Testing', href: '/testing' },
+  { text: 'Validation and Rules', href: '/validation-rules' },
+  { text: 'Session And Cookies', href: '/session-cookies' },
   { text: 'Luna CLI', href: '/luna-cli' },
 ];
 
@@ -55,8 +50,8 @@ export default function Sidebar() {
       <List>
         {menuItems.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <ListItemButton component={Link} href={item.href}>
-              <ListItemText primary={item.text} />
+            <ListItemButton component={Link} href={item.href} sx={{my:0.3,mx:1,p:0}}>
+              <ListItemText primary={item.text}  sx={{my:0.3,mx:1,p:0}}/>
             </ListItemButton>
           </ListItem>
         ))}
