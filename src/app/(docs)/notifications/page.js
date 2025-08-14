@@ -10,7 +10,7 @@ export default function Notifications() {
       </Typography>
 
       <Typography variant="body1" paragraph>
-        Rivulet's notification system provides a simple global{" "}
+        Rivulet&apos;s notification system provides a simple global{" "}
         <code>Notify()</code> function for sending notifications through
         multiple channels.
       </Typography>
@@ -199,34 +199,34 @@ NOTIFICATION_SMS_FROM=+15551234567`}
       <Box component="ul" sx={{ pl: 4, mb: 3 }}>
         <li>
           <Typography variant="body1">
-            <code>'firebase'</code>: Mobile push notifications (requires device
+            <code>&apos;firebase&apos;</code>: Mobile push notifications (requires device
             token)
           </Typography>
         </li>
         <li>
           <Typography variant="body1">
-            <code>'pusher'</code>: Real-time web notifications (channel name)
+            <code>&apos;pusher&apos;</code>: Real-time web notifications (channel name)
           </Typography>
         </li>
         <li>
           <Typography variant="body1">
-            <code>'slack'</code>: Slack messages (channel or user ID)
+            <code>&apos;slack&apos;</code>: Slack messages (channel or user ID)
           </Typography>
         </li>
         <li>
           <Typography variant="body1">
-            <code>'whatsapp'</code>: WhatsApp Business messages (E.164 phone
+            <code>&apos;whatsapp&apos;</code>: WhatsApp Business messages (E.164 phone
             number)
           </Typography>
         </li>
         <li>
           <Typography variant="body1">
-            <code>'sms'</code>: Text messages (phone number)
+            <code>&apos;sms&apos;</code>: Text messages (phone number)
           </Typography>
         </li>
         <li>
           <Typography variant="body1">
-            <code>'mail'</code>: Email notifications
+            <code>&apos;mail&apos;</code>: Email notifications
           </Typography>
         </li>
       </Box>

@@ -10,7 +10,7 @@ export default function Routing() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Rivulet's routing system provides a clean, intuitive way to define web routes with support for RESTful patterns, middleware, and route caching.
+        Rivulet&apos;s routing system provides a clean, intuitive way to define web routes with support for RESTful patterns, middleware, and route caching.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
@@ -56,7 +56,7 @@ export default function Routing() {
           URI Prefix Matching
         </Typography>
         <Typography variant="body1" paragraph>
-          Routes are matched in the order they are defined. The empty string prefix (<code>''</code>) handles the root path.
+          Routes are matched in the order they are defined. The empty string prefix (<code>&apos;&apos;</code>) handles the root path.
         </Typography>
         
         <Typography variant="h5" component="h3" gutterBottom>

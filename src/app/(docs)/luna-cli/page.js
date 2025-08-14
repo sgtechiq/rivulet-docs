@@ -10,7 +10,7 @@ export default function ConsoleCLI() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Rivulet's powerful command-line interface (Luna CLI) provides comprehensive tools for application development, 
+        Rivulet&apos;s powerful command-line interface (Luna CLI) provides comprehensive tools for application development, 
         maintenance, and deployment. Execute commands using <code>php luna [command]</code>.
       </Typography>
       

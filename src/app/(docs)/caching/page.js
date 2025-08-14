@@ -18,7 +18,7 @@ export default function CachingSystem() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        The cache is configured in your application's service container. Default path:
+        The cache is configured in your application&apos;s service container. Default path:
       </Typography>
       
       <CodeBlock 
@@ -102,7 +102,7 @@ echo \$html;`}
       </Typography>
       
       <Box component="ul" sx={{ pl: 4 }}>
-        <li><Typography variant="body1">Use descriptive cache keys (e.g., 'user_123_profile')</Typography></li>
+        <li><Typography variant="body1">Use descriptive cache keys (e.g., &apos;user_123_profile&apos;)</Typography></li>
         <li><Typography variant="body1">Set appropriate TTL based on data volatility</Typography></li>
         <li><Typography variant="body1">Clear cache after data updates</Typography></li>
         <li><Typography variant="body1">Avoid caching sensitive information</Typography></li>

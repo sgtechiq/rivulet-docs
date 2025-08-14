@@ -10,7 +10,7 @@ export default function TemplateEngine() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Rivulet's lightweight template engine handles basic variable replacement and array iteration with a simple syntax.
+        Rivulet&apos;s lightweight template engine handles basic variable replacement and array iteration with a simple syntax.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>

@@ -93,7 +93,7 @@ try {
         </li>
         <li>
           <Typography variant="body1">
-            <code>warning</code>: Exceptional occurrences that aren't errors
+            <code>warning</code>: Exceptional occurrences that aren&apos;t errors
           </Typography>
         </li>
         <li>

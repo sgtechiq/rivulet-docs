@@ -10,7 +10,7 @@ export default function Filesystem() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Rivulet's filesystem provides a unified interface for file operations across local and cloud storage, with built-in security and convenience methods.
+        Rivulet&apos;s filesystem provides a unified interface for file operations across local and cloud storage, with built-in security and convenience methods.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>

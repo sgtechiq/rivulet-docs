@@ -10,7 +10,7 @@ export default function MailSystem() {
       </Typography>
 
       <Typography variant="body1" paragraph>
-        Rivulet's mail system provides a unified API for sending emails through
+        Rivulet&apos;s mail system provides a unified API for sending emails through
         multiple drivers with support for templates and attachments.
       </Typography>
 
@@ -57,7 +57,7 @@ export default function MailSystem() {
         </li>
         <li>
           <Typography variant="body1">
-            <strong>mail()</strong> - PHP's built-in mail function
+            <strong>mail()</strong> - PHP&apos;s built-in mail function
           </Typography>
         </li>
       </Box>

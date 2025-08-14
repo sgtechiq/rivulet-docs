@@ -10,7 +10,7 @@ export default function Migrations() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Rivulet's migration system provides version control for your database schema, allowing you to modify and share database structures across your team.
+        Rivulet&apos;s migration system provides version control for your database schema, allowing you to modify and share database structures across your team.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
@@ -84,7 +84,7 @@ export default function Migrations() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Here's a complete users table migration:
+        Here&apos;s a complete users table migration:
       </Typography>
       
       <CodeBlock 

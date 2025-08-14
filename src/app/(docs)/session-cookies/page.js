@@ -141,7 +141,7 @@ ForgetCookie('preferences');`}
         <li><Typography variant="body1">Regenerate session ID after login</Typography></li>
         <li><Typography variant="body1">Use flash messages for one-time notifications</Typography></li>
         <li><Typography variant="body1">Validate cookie data before use</Typography></li>
-        <li><Typography variant="body1">Consider SameSite 'strict' for sensitive actions</Typography></li>
+        <li><Typography variant="body1">Consider SameSite &apos;strict&apos; for sensitive actions</Typography></li>
       </Box>
       
       <Typography variant="h4" component="h2" gutterBottom>

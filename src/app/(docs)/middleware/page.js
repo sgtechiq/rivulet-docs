@@ -14,7 +14,7 @@ export default function AuthMiddleware() {
       </Typography>
 
       <Typography variant="body1" paragraph sx={{ color: 'success.main', fontWeight: 'bold' }}>
-        Note: The authentication middleware ('auth') is built-in and ready to use.
+        Note: The authentication middleware (&apos;auth&apos;) is built-in and ready to use.
       </Typography>
 
       <Typography variant="h4" component="h2" gutterBottom>

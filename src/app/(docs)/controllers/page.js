@@ -64,7 +64,7 @@ export default function Controllers() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Here's a complete UserController example:
+        Here&apos;s a complete UserController example:
       </Typography>
       
       <CodeBlock 

@@ -31,7 +31,7 @@ export default function Models() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Models extend the base Rivulet\Model class and define their table structure and relationships. Here's a basic model example:
+        Models extend the base Rivulet\Model class and define their table structure and relationships. Here&apos;s a basic model example:
       </Typography>
       
       <CodeBlock 

@@ -10,7 +10,7 @@ export default function Events() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Rivulet's event system provides a simple observer implementation, allowing you to subscribe and listen for events in your application.
+        Rivulet&apos;s event system provides a simple observer implementation, allowing you to subscribe and listen for events in your application.
       </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>

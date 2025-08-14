@@ -88,7 +88,7 @@ export default function Services() {
       </Typography>
       
       <Typography variant="body1" paragraph>
-        Here's a complete ArticleService implementation:
+        Here&apos;s a complete ArticleService implementation:
       </Typography>
       
       <CodeBlock 
