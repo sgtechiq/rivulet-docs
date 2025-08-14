@@ -82,7 +82,6 @@ NOTIFICATION_SMS_ACCOUNT_SID=your_account_sid
 NOTIFICATION_SMS_AUTH_TOKEN=your_auth_token
 NOTIFICATION_SMS_FROM=+15551234567`}
       />
-
       <Typography variant="h4" component="h2" gutterBottom>
         Supported Channels
       </Typography>
@@ -121,127 +120,51 @@ NOTIFICATION_SMS_FROM=+15551234567`}
       </Box>
 
       <Typography variant="h4" component="h2" gutterBottom>
-        Basic Usage
+        Firebase Notification
       </Typography>
 
-      <Typography variant="h5" component="h3" gutterBottom>
-        Mobile Push Notification
-      </Typography>
       <CodeBlock
-        phpCode={`Notify(
-    'device_token_123', 
-    'firebase',
-    'New Message', 
-    'You have 3 unread messages'
-);`}
-      />
-
-      <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
-        Slack Alert
-      </Typography>
-      <CodeBlock
-        phpCode={`Notify(
-    '#alerts',
-    'slack',
-    'Server Warning', 
-    'High memory usage detected'
-);`}
+        phpCode={`// Global helper\nNotifyFirebase('device_token_123', 'New Message', 'You have 3 unread messages');\n\n// Original chainable method\napp()->make('notification')->channel('firebase')->to('device_token_123')->title('New Message')->body('You have 3 unread messages')->send();`}
       />
 
       <Typography variant="h4" component="h2" gutterBottom>
-        Advanced Usage
+        Pusher Notification
       </Typography>
 
-      <Typography variant="h5" component="h3" gutterBottom>
-        With Data Payload
-      </Typography>
       <CodeBlock
-        phpCode={`Notify(
-    'user-123',
-    'pusher',
-    'New Comment',
-    'John commented on your post',
-    [
-        'post_id' => 456,
-        'deep_link' => '/posts/456/comments'
-    ]
-);`}
-      />
-
-      <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
-        Multiple Recipients
-      </Typography>
-      <CodeBlock
-        phpCode={`Notify(
-    ['+15551234567', '+15559876543'],
-    'sms',
-    'Appointment Reminder',
-    'Your dental appointment is tomorrow at 2PM'
-);`}
-      />
-
-      <Typography variant="h5" component="h3" gutterBottom sx={{ mt: 2 }}>
-        WhatsApp Business Message
-      </Typography>
-      <CodeBlock
-        phpCode={`Notify(
-    '+15551234567',
-    'whatsapp',
-    '', // Optional title
-    'Your package has shipped. Tracking #: ABC123'
-);`}
+        phpCode={`// Global helper\nNotifyPusher('channel-123', 'Event Update', 'New event scheduled');\n\n// Original chainable method\napp()->make('notification')->channel('pusher')->to('channel-123')->title('Event Update')->body('New event scheduled')->send();`}
       />
 
       <Typography variant="h4" component="h2" gutterBottom>
-        Channel Reference
-      </Typography>
-
-      <Box component="ul" sx={{ pl: 4, mb: 3 }}>
-        <li>
-          <Typography variant="body1">
-            <code>&apos;firebase&apos;</code>: Mobile push notifications (requires device
-            token)
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1">
-            <code>&apos;pusher&apos;</code>: Real-time web notifications (channel name)
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1">
-            <code>&apos;slack&apos;</code>: Slack messages (channel or user ID)
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1">
-            <code>&apos;whatsapp&apos;</code>: WhatsApp Business messages (E.164 phone
-            number)
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1">
-            <code>&apos;sms&apos;</code>: Text messages (phone number)
-          </Typography>
-        </li>
-        <li>
-          <Typography variant="body1">
-            <code>&apos;mail&apos;</code>: Email notifications
-          </Typography>
-        </li>
-      </Box>
-
-      <Typography variant="h4" component="h2" gutterBottom>
-        Error Handling
+        Slack Notification
       </Typography>
 
       <CodeBlock
-        phpCode={`try {
-    Notify('device_123', 'firebase', 'Alert', 'Something happened');
-} catch (\Exception \$e) {
-    // Handle notification failure
-    Log::error('Notification failed: ' . \$e->getMessage());
-}`}
+        phpCode={`// Global helper\nNotifySlack('#alerts', 'Server Warning', 'High memory usage detected');\n\n// Original chainable method\napp()->make('notification')->channel('slack')->to('#alerts')->title('Server Warning')->body('High memory usage detected')->send();`}
+      />
+
+      <Typography variant="h4" component="h2" gutterBottom>
+        WhatsApp Notification
+      </Typography>
+
+      <CodeBlock
+        phpCode={`// Global helper\nNotifyWhatsapp('+15551234567', '', 'Your package has shipped. Tracking #: ABC123');\n\n// Original chainable method\napp()->make('notification')->channel('whatsapp')->to('+15551234567')->body('Your package has shipped. Tracking #: ABC123')->send();`}
+      />
+
+      <Typography variant="h4" component="h2" gutterBottom>
+        SMS Notification
+      </Typography>
+
+      <CodeBlock
+        phpCode={`// Global helper\nNotifySms('+15551234567', 'Appointment Reminder', 'Your dental appointment is tomorrow at 2PM');\n\n// Original chainable method\napp()->make('notification')->channel('sms')->to('+15551234567')->title('Appointment Reminder')->body('Your dental appointment is tomorrow at 2PM')->send();`}
+      />
+
+      <Typography variant="h4" component="h2" gutterBottom>
+        Mail Notification
+      </Typography>
+
+      <CodeBlock
+        phpCode={`// Global helper\nNotifyMail('user@example.com', 'Welcome', 'Thanks for signing up!');\n\n// Original chainable method\napp()->make('notification')->channel('mail')->to('user@example.com')->title('Welcome')->body('Thanks for signing up!')->send();`}
       />
 
       <Typography variant="h4" component="h2" gutterBottom>

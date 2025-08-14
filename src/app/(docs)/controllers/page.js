@@ -1,6 +1,6 @@
-import React from 'react';
-import { Typography, Box } from '@mui/material';
-import CodeBlock from '@/components/CodeBlock';
+import React from "react";
+import { Typography, Box } from "@mui/material";
+import CodeBlock from "@/components/CodeBlock";
 
 export default function Controllers() {
   return (
@@ -68,8 +68,24 @@ export default function Controllers() {
       </Typography>
       
       <CodeBlock 
-        phpCode={`<?php\nnamespace App\\Controllers;\n\nuse App\\Models\\User;\nuse Rivulet\\Controller;\n\nclass UserController extends Controller\n{\n    public function list()\n    {\n        return User::all();\n    }\n\n    public function show(\$id)\n    {\n        \$this->validate(['id' => \$id], ['id' => 'required|integer']);\n        \$user = User::find(\$id);\n        return \$user ?: \$this->jsonError('Not found', 404);\n    }\n\n    public function store()\n    {\n        \$data = \$this->request->input();\n        \$this->validate(\$data, [\n            'name' => 'required|string',\n            'email' => 'required|email|unique:users',\n            'password' => 'required|min:8'\n        ]);\n        \n        \$data['password'] = bcrypt(\$data['password']);\n        return User::create(\$data);\n    }\n\n    public function edit(\$id)\n    {\n        \$user = User::findOrFail(\$id);\n        \$data = \$this->request->input();\n        \n        \$this->validate(\$data, [\n            'name' => 'sometimes|string',\n            'email' => 'sometimes|email|unique:users,email,'.\$id,\n            'password' => 'sometimes|min:8'\n        ]);\n        \n        if (isset(\$data['password'])) {\n            \$data['password'] = bcrypt(\$data['password']);\n        }\n        \n        \$user->update(\$data);\n        return \$user;\n    }\n\n    public function delete(\$id)\n    {\n        User::findOrFail(\$id)->delete();\n        return \$this->jsonSuccess('User archived');\n    }\n\n    public function destroy(\$id)\n    {\n        User::findOrFail(\$id)->forceDelete();\n        return \$this->jsonSuccess('User permanently deleted');\n    }\n}`}
+        phpCode={`<?php\nnamespace App\\Controllers;\n\nuse App\\Models\\User;\nuse Rivulet\\Controller;\n\nclass UserController extends Controller\n{\n    public function list()\n    {\n        return User::all();\n    }\n\n    public function show(\$id)\n    {\n        \$this->validate(['id' => \$id], ['id' => 'required|integer']);\n        \$user = User::find(\$id);\n        return \$user ?: \$this->jsonError('Not found', 404);\n    }\n\n    public function store()\n    {\n        \$data = \$this->request->input();\n        \$this->validate(\$data, [\n            'name' => 'required|string',\n            'email' => 'required|email|unique:users',\n            'password' => 'required|min:8'\n        ]);\n        \n        \$data['password'] = bcrypt(\$data['password']);\n        return User::create(\$data);\n    }\n\n    public function edit(\$id)\n    {\n        \$user = User::findOrFail(\$id);\n        \$data = Request();  // Using global Request() for input\n        \n        \$this->validate(\$data, [\n            'name' => 'sometimes|string',\n            'email' => 'sometimes|email|unique:users,email,'.\$id,\n            'password' => 'sometimes|min:8'\n        ]);\n        \n        if (isset(\$data['password'])) {\n            \$data['password'] = bcrypt(\$data['password']);\n        }\n        \n        \$user->update(\$data);\n        return \$user;\n    }\n\n    public function delete(\$id)\n    {\n        User::findOrFail(\$id)->delete();\n        return \$this->jsonSuccess('User archived');\n    }\n\n    public function destroy(\$id)\n    {\n        User::findOrFail(\$id)->forceDelete();\n        return \$this->jsonSuccess('User permanently deleted');\n    }\n}`}
       />
+      
+      <Typography variant="h4" component="h2" gutterBottom>
+        Using Global Request Helpers
+      </Typography>
+      
+      <Typography variant="body1" paragraph>
+        Rivulet provides global helpers for request data:
+      </Typography>
+      
+      <CodeBlock 
+        phpCode="// Get full input\n\$data = Request();\n\n// Get specific input key\n\$value = Request('key', 'default');\n\n// Get query parameter\n\$page = RequestQuery('page', 1);\n\n// Get header\n\$auth = RequestHeader('Authorization');"
+      />
+      
+      <Typography variant="body1" paragraph>
+        These can be used alongside or instead of \$this-&lt;request in controllers.
+      </Typography>
       
       <Typography variant="h4" component="h2" gutterBottom>
         Common Controller Patterns

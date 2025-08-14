@@ -35,7 +35,7 @@ export default function Filesystem() {
       </Typography>
       
       <CodeBlock 
-        phpCode={`<?php\n\nreturn [\n    'default' => env('FILESYSTEM_DISK', 'local'),\n    \n    'disks' => [\n        'local' => [\n            'driver' => 'local',\n            'root' => dirname(__DIR__) . '/storage/uploads',\n            'url' => env('APP_URL') . '/storage',\n            'visibility' => 'public'\n        ],\n        \n        // Example S3 configuration\n        's3' => [\n            'driver' => 's3',\n            'key' => env('AWS_ACCESS_KEY_ID'),\n            'secret' => env('AWS_SECRET_ACCESS_KEY'),\n            'region' => env('AWS_DEFAULT_REGION'),\n            'bucket' => env('AWS_BUCKET'),\n            'url' => env('AWS_URL')\n        ]\n    ]\n];`}
+        phpCode={`<?php\n\nreturn [\n    'default' => env('FILESYSTEM_DISK', 'local'),\n    \n    'disks' => [\n        'local' => [\n            'driver' => 'local',\n            'root' => dirname(__DIR__) . '/storage/uploads',\n            'url' => env('APP_URL') . '/storage',\n            'visibility' => 'public'\n        ]\n   ]\n];`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
@@ -47,14 +47,21 @@ export default function Filesystem() {
           File Uploads
         </Typography>
         <CodeBlock 
-          phpCode={`// Handle file upload\n\$path = \$filesystem->upload(\$_FILES['document'], 'documents', 'contract.pdf');\n// Returns: documents/contract.pdf`}
+          phpCode={`// Instance method (in controller)\$path = \$this->filesystem->upload(\$_FILES['document'], 'documents', 'contract.pdf');\n// Returns: documents/contract.pdf\n\n// Global helper\n\$path = UploadFile(\$_FILES['document'], 'documents', 'contract.pdf');`}
         />
         
         <Typography variant="h5" component="h3" gutterBottom>
           File Downloads
         </Typography>
         <CodeBlock 
-          phpCode={`// Download file\nreturn \$filesystem->download('documents/contract.pdf');`}
+          phpCode={`// Instance method (in controller)\return \$this->filesystem->download('documents/contract.pdf');\n\n// Global helper\nreturn DownloadFile('documents/contract.pdf');`}
+        />
+
+        <Typography variant="h5" component="h3" gutterBottom>
+          Create File
+        </Typography>
+        <CodeBlock 
+          phpCode={`// Instance method (in controller)\$path = \$this->filesystem->createFile('documents/note.txt', 'Content here');\n// Returns: documents/note.txt\n\n// Global helper\n\$path = CreateFile('documents/note.txt', 'Content here');`}
         />
       </Box>
       
@@ -63,7 +70,7 @@ export default function Filesystem() {
       </Typography>
       
       <CodeBlock 
-        phpCode={`// Create directory\n\$filesystem->createDirectory('user_uploads/123');\n\n// Delete directory (recursive)\n\$filesystem->delete('temp_files');\n\n// Copy directory\n\$filesystem->copy('templates', 'archives/templates_backup');`}
+        phpCode={`// Create directory\n// Instance\n\$this->filesystem->createDirectory('user_uploads/123');\n// Global\nCreateDirectory('user_uploads/123');\n\n// Delete directory (recursive)\n// Instance\n\$this->filesystem->delete('temp_files');\n// Global\nDeleteDirectory('temp_files');\n\n// Copy directory\n// Instance\n\$this->filesystem->copy('templates', 'archives/templates_backup');\n// Global\nCopyDirectory('templates', 'archives/templates_backup');`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
@@ -71,7 +78,7 @@ export default function Filesystem() {
       </Typography>
       
       <CodeBlock 
-        phpCode={`// Move file\n\$filesystem->move('uploads/temp.jpg', 'images/profile.jpg');\n\n// Rename file\n\$filesystem->rename('documents/report.txt', 'annual_report.txt');\n\n// Delete file\n\$filesystem->delete('old_data.csv');`}
+        phpCode={`// Move file\n// Instance\n\$this->filesystem->move('uploads/temp.jpg', 'images/profile.jpg');\n// Global\nMoveFile('uploads/temp.jpg', 'images/profile.jpg');\n\n// Rename file\n// Instance\n\$this->filesystem->rename('documents/report.txt', 'annual_report.txt');\n// Global\nRenameFile('documents/report.txt', 'annual_report.txt');\n\n// Delete file\n// Instance\n\$this->filesystem->delete('old_data.csv');\n// Global\nDeleteFile('old_data.csv');`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
@@ -79,7 +86,7 @@ export default function Filesystem() {
       </Typography>
       
       <CodeBlock 
-        phpCode={`// Create ZIP archive\n\$zipName = \$filesystem->zip('exports', 'backups/export_2023.zip');\n\n// Extract ZIP\n\$filesystem->unzip('backups/export_2023.zip', 'restored_data');`}
+        phpCode={`// Create ZIP archive\n// Instance\n\$zipName = \$this->filesystem->zip('exports', 'backups/export_2023.zip');\n// Global\n\$zipName = CompressDirectory('exports', 'backups/export_2023.zip');\n\n// Extract ZIP\n// Instance\n\$this->filesystem->unzip('backups/export_2023.zip', 'restored_data');\n// Global\nExtractFile('backups/export_2023.zip', 'restored_data');`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
@@ -102,7 +109,7 @@ export default function Filesystem() {
       </Typography>
       
       <CodeBlock 
-        phpCode={`<?php\n\n// In your controller\npublic function uploadDocument(Request \$request)\n{\n    try {\n        // Store uploaded file\n        \$path = \$this->filesystem->upload(\n            \$request->files['document'], \n            'user_docs/' . \$request->user->id,\n            'contract_' . time() . '.pdf'\n        );\n        \n        // Create backup archive\n        \$this->filesystem->zip(\n            'user_docs/' . \$request->user->id,\n            'backups/user_' . \$request->user->id . '.zip'\n        );\n        \n        return ['status' => 'success', 'path' => \$path];\n    } catch (Exception \$e) {\n        return Response::error(\$e->getMessage(), 500);\n    }\n}`}
+        phpCode={`<?php\n\n// In your controller\npublic function uploadDocument(Request \$request)\n{\n    try {\n        // Store uploaded file\n        // Instance method\n        \$path = \$this->filesystem->upload(\n            \$request->files['document'], \n            'user_docs/' . \$request->user->id,\n            'contract_' . time() . '.pdf'\n        );\n        // Global helper\n        // \$path = UploadFile(\$request->files['document'], 'user_docs/' . \$request->user->id, 'contract_' . time() . '.pdf');\n        \n        // Create backup archive\n        // Instance\n        \$this->filesystem->zip(\n            'user_docs/' . \$request->user->id,\n            'backups/user_' . \$request->user->id . '.zip'\n        );\n        // Global\n        // CompressDirectory('user_docs/' . \$request->user->id, 'backups/user_' . \$request->user->id . '.zip');\n        \n        return ['status' => 'success', 'path' => \$path];\n    } catch (Exception \$e) {\n        return Response::error(\$e->getMessage(), 500);\n    }\n}`}
       />
       
       <Typography variant="h4" component="h2" gutterBottom>
